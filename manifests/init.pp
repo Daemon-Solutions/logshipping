@@ -25,4 +25,16 @@ class logshipping (
   class { '::logshipping::config': }
   ~> class { '::logshipping::service': }
   -> Class['::logshipping']
+
+  class { '::filebeat':
+    manage_repo   => false,
+    major_version => $filebeat_major_version,
+    outputs       => {
+      'logstash' =>  {
+        'hosts'             => [ "localhost:${logzoom_listen_port}" ],
+        'compression_level' =>  1,
+        'ssl.enabled'       => false,
+      }
+    }
+  }
 }
