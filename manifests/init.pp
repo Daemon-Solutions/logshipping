@@ -29,7 +29,7 @@ class logshipping (
   class { '::filebeat':
     manage_repo   => false,
     major_version => $filebeat_major_version,
-    
+
     logging  => {
       'level' =>  'info',
       'to_files'=> 'true',
@@ -40,6 +40,7 @@ class logshipping (
         'hosts'             => [ "localhost:${logzoom_listen_port}" ],
         'compression_level' =>  1,
         'ssl.enabled'       => false,
+        'bulk_max_size'     => 1024,
       }
     }
   }
